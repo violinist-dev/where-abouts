@@ -1,9 +1,12 @@
 <template>
   <div class="rounded-borders" >
     <q-toolbar :class="props.headerCss">
-      <q-toolbar-title>{{ props.title }}</q-toolbar-title>
+      <q-toolbar-title><span>{{ props.title }}
+        <q-badge v-if="listLength" rounded align="middle" color="white" :text-color="props.badgeColour">{{ listLength }}</q-badge>
+      </span>
+      </q-toolbar-title>
     </q-toolbar>
-    <q-list bordered  :class="props.bodyCss">
+    <q-list bordered :class="props.bodyCss">
       <draggable
         class="list-group"
         :list="props.list"
@@ -39,8 +42,12 @@
 
 <script setup>
 import draggable from 'vuedraggable'
+import { computed } from 'vue'
 
-const props = defineProps(['title', 'headerCss', 'bodyCss', 'list'])
+const props = defineProps(['title', 'headerCss', 'bodyCss', 'list', 'badgeColour'])
+const listLength  = computed(() => {
+  return props.list.length
+})
 
 function log(evt) {
   // window.console.log(evt)

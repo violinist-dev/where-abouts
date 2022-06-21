@@ -10,6 +10,7 @@
           header-css="bg-green text-white"
           body-css="bg-green-1"
           :list="inTheOffice"
+          badge-colour="green"
           />
       </div>
       <!-- working remotely -->
@@ -19,6 +20,7 @@
           header-css="bg-blue text-white"
           body-css="bg-blue-1"
           :list="workingRemotely"
+          badge-colour="blue"
           />
       </div>
       <!-- Out of office -->
@@ -28,6 +30,7 @@
           header-css="bg-blue-grey-5 text-white"
           body-css="bg-blue-grey-1"
           :list="outOfOffice"
+          badge-colour="blue-grey-5"
           />
       </div>
       <!-- On Leave -->
@@ -37,6 +40,7 @@
           header-css="bg-grey text-white"
           body-css="bg-grey-1"
           :list="onLeave"
+          badge-colour="grey"
           />
       </div>
     </div>
