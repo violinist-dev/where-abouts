@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="rounded-borders" >
     <q-toolbar :class="props.headerCss">
       <q-toolbar-title>{{ props.title }}</q-toolbar-title>
     </q-toolbar>
-    <q-list bordered rounded :class="props.bodyCss">
+    <q-list bordered  :class="props.bodyCss">
       <draggable
         class="list-group"
         :list="props.list"

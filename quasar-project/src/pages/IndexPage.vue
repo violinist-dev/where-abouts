@@ -46,57 +46,17 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useStoreStaff } from 'stores/storeStaff'
 import KanbanList from 'components/Kanban/KanbanList.vue'
+
+const store = useStoreStaff()
 
 const spacingCss = "col-xs-12 col-sm-6 col-lg-3"
 
-const inTheOffice = ref([ {
-  id: 1,
-  name: 'Ruddy Jedrzej',
-  email: 'rjedrzej0@discuz.net',
-  letter: 'R'
-}, {
-  id: 2,
-  name: 'Mallorie Alessandrini',
-  email: 'malessandrini1@marketwatch.com',
-  letter: 'M'
-}, {
-  id: 3,
-  name: 'Elisabetta Wicklen',
-  email: 'ewicklen2@microsoft.com',
-  letter: 'E'
-}, {
-  id: 4,
-  name: 'Seka Fawdrey',
-  email: 'sfawdrey3@wired.com',
-  letter: 'S'
-} ])
-
-const workingRemotely = ref([ {
-  id: 5,
-  name: 'Brunhilde Panswick',
-  email: 'bpanswick4@csmonitor.com',
-  avatar: 'avatar2.jpg'
-}, {
-  id: 6,
-  name: 'Winfield Stapforth',
-  email: 'wstapforth5@pcworld.com',
-  avatar: 'avatar6.jpg'
-} ])
-
-const outOfOffice = ref([ {
-  id: 7,
-  name: 'Ainsof So\'o',
-  email: 'ainsofs@csmonitor.com',
-  avatar: 'avatar4.jpg'
-}, {
-  id: 8,
-  name: 'Billy Chan-Ting',
-  email: 'billyc@pcworld.com',
-  avatar: 'avatar1.jpg'
-} ])
-
-const onLeave = ref([])
+const inTheOffice = ref(store.getStaffInTheOffice)
+const workingRemotely = ref(store.getStaffWorkingRemotely)
+const outOfOffice = ref(store.getStaffOutOfOffice)
+const onLeave = ref(store.getStaffOnLeave)
 
 </script>
 
