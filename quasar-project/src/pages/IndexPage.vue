@@ -2,89 +2,55 @@
   <q-page class="q-pa-md">
     <div class="q-pb-md text-caption">Update staff where abouts by dragging their names to the appropriate area.</div>
 
-    <div class="board row q-gutter-md">
+    <div class="board row q-col-gutter-md">
       <!-- in the office -->
-      <div class="col">
-        <q-toolbar class="bg-green text-white">
-          <q-toolbar-title>In the Office</q-toolbar-title>
-        </q-toolbar>
-        <q-list bordered class="bg-green-1">
-
-          <q-item v-for="contact in inTheOffice" :key="contact.id" class="q-my-sm" clickable v-ripple>
-            <q-item-section avatar>
-              <q-avatar color="primary" text-color="white">
-                {{ contact.letter }}
-              </q-avatar>
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label>{{ contact.name }}</q-item-label>
-              <q-item-label caption lines="1">{{ contact.email }}</q-item-label>
-            </q-item-section>
-
-            <q-item-section side>
-              <q-icon name="chat_bubble" color="green" />
-            </q-item-section>
-          </q-item>
-        </q-list>
+      <div :class="spacingCss">
+        <kanban-list
+          title="In the Office"
+          header-css="bg-green text-white"
+          body-css="bg-green-1"
+          :list="inTheOffice"
+          />
       </div>
       <!-- working remotely -->
-      <div class="col">
-        <q-toolbar class="bg-blue text-white">
-          <q-toolbar-title>Working Remotely</q-toolbar-title>
-        </q-toolbar>
-        <q-list bordered class="bg-blue-1">
-          <q-item v-for="contact in workingRemotely" :key="contact.id" class="q-mb-sm" clickable v-ripple>
-            <q-item-section avatar>
-              <q-avatar>
-                <img :src="`https://cdn.quasar.dev/img/${contact.avatar}`">
-              </q-avatar>
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label>{{ contact.name }}</q-item-label>
-              <q-item-label caption lines="1">{{ contact.email }}</q-item-label>
-            </q-item-section>
-
-            <q-item-section side>
-              <q-icon name="chat_bubble" color="grey" />
-            </q-item-section>
-          </q-item>
-        </q-list>
+      <div :class="spacingCss">
+        <kanban-list
+          title="Working Remotely"
+          header-css="bg-blue text-white"
+          body-css="bg-blue-1"
+          :list="workingRemotely"
+          />
       </div>
       <!-- Out of office -->
-      <div class="col">
-        <q-toolbar class="bg-red-5 text-white">
-          <q-toolbar-title>Out of Office</q-toolbar-title>
-        </q-toolbar>
-        <q-list bordered class="bg-red-1">
-          <q-item v-for="contact in outOfOffice" :key="contact.id" class="q-mb-sm" clickable v-ripple>
-            <q-item-section avatar>
-              <q-avatar>
-                <img :src="`https://cdn.quasar.dev/img/${contact.avatar}`">
-              </q-avatar>
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label>{{ contact.name }}</q-item-label>
-              <q-item-label caption lines="1">{{ contact.email }}</q-item-label>
-            </q-item-section>
-
-            <q-item-section side>
-              <q-icon name="chat_bubble" color="grey" />
-            </q-item-section>
-          </q-item>
-        </q-list>
+      <div :class="spacingCss">
+        <kanban-list
+          title="Out of Office"
+          header-css="bg-blue-grey-5 text-white"
+          body-css="bg-blue-grey-1"
+          :list="outOfOffice"
+          />
       </div>
-
-
+      <!-- On Leave -->
+      <div :class="spacingCss">
+        <kanban-list
+          title="On Leave"
+          header-css="bg-grey text-white"
+          body-css="bg-grey-1"
+          :list="onLeave"
+          />
+      </div>
     </div>
+
   </q-page>
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import KanbanList from 'components/Kanban/KanbanList.vue'
 
-const inTheOffice = [ {
+const spacingCss = "col-xs-12 col-sm-6 col-lg-3"
+
+const inTheOffice = ref([ {
   id: 1,
   name: 'Ruddy Jedrzej',
   email: 'rjedrzej0@discuz.net',
@@ -104,9 +70,9 @@ const inTheOffice = [ {
   name: 'Seka Fawdrey',
   email: 'sfawdrey3@wired.com',
   letter: 'S'
-} ]
+} ])
 
-const workingRemotely = [ {
+const workingRemotely = ref([ {
   id: 5,
   name: 'Brunhilde Panswick',
   email: 'bpanswick4@csmonitor.com',
@@ -116,9 +82,9 @@ const workingRemotely = [ {
   name: 'Winfield Stapforth',
   email: 'wstapforth5@pcworld.com',
   avatar: 'avatar6.jpg'
-} ]
+} ])
 
-const outOfOffice = [ {
+const outOfOffice = ref([ {
   id: 7,
   name: 'Ainsof So\'o',
   email: 'ainsofs@csmonitor.com',
@@ -128,7 +94,9 @@ const outOfOffice = [ {
   name: 'Billy Chan-Ting',
   email: 'billyc@pcworld.com',
   avatar: 'avatar1.jpg'
-} ]
+} ])
 
+const onLeave = ref([])
 
 </script>
+
