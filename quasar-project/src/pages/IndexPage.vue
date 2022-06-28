@@ -1,66 +1,124 @@
 <template>
   <q-page class="q-pa-md">
-    <div class="q-pb-md text-caption">Update staff where abouts by dragging their names to the appropriate area.</div>
+    <div class="q-pb-md text-weight-medium">For {{ todaysDate }}</div>
+    <div class="q-pb-md text-caption">Update peoples where abouts by dragging their names to the appropriate area (desktop only). You can also click on them to select a status. </div>
 
     <div class="board row q-col-gutter-md">
       <!-- in the office -->
       <div :class="spacingCss">
         <kanban-list
           title="In the Office"
+          icon="work"
           header-css="bg-green text-white"
           body-css="bg-green-1"
-          :list="inTheOffice"
+          :list="store.getStaffInTheOffice"
           badge-colour="green"
+          @add="add('in-the-office', $event)"
+          @remove="remove('in-the-office', $event)"
+          @item-click="showModal"
           />
       </div>
       <!-- working remotely -->
       <div :class="spacingCss">
         <kanban-list
           title="Working Remotely"
+          icon="work_outline"
           header-css="bg-blue text-white"
           body-css="bg-blue-1"
-          :list="workingRemotely"
+          :list="store.getStaffWorkingRemotely"
           badge-colour="blue"
+          @add="add('working-remotely', $event)"
+          @remove="remove('working-remotely', $event)"
+          @item-click="showModal"
           />
       </div>
       <!-- Out of office -->
       <div :class="spacingCss">
         <kanban-list
           title="Out of Office"
+          icon="comments_disabled"
           header-css="bg-blue-grey-5 text-white"
           body-css="bg-blue-grey-1"
-          :list="outOfOffice"
+          :list="store.getStaffOutOfOffice"
           badge-colour="blue-grey-5"
+          @add="add('out-of-office', $event)"
+          @remove="remove('out-of-office', $event)"
+          @item-click="showModal"
           />
       </div>
       <!-- On Leave -->
       <div :class="spacingCss">
         <kanban-list
           title="On Leave"
+          icon="beach_access"
           header-css="bg-grey text-white"
           body-css="bg-grey-1"
-          :list="onLeave"
+          :list="store.getStaffOnLeave"
           badge-colour="grey"
+          @add="add('on-leave', $event)"
+          @remove="remove('on-leave', $event)"
+          @item-click="showModal"
           />
       </div>
     </div>
 
+    <q-dialog v-model="prompt" persistent>
+      <set-status-modal :element="element" @update="update" />
+    </q-dialog>
   </q-page>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { date } from 'quasar'
 import { useStoreStaff } from 'stores/storeStaff'
+
 import KanbanList from 'components/Kanban/KanbanList.vue'
+import SetStatusModal from 'components/Kanban/Modals/SetStatusModal.vue'
 
 const store = useStoreStaff()
 
+store.dReadData()
+
 const spacingCss = "col-xs-12 col-sm-6 col-lg-3"
 
-const inTheOffice = ref(store.getStaffInTheOffice)
-const workingRemotely = ref(store.getStaffWorkingRemotely)
-const outOfOffice = ref(store.getStaffOutOfOffice)
-const onLeave = ref(store.getStaffOnLeave)
+const prompt = ref(false)
+const element = ref(null)
+const todaysDate = computed(() => {
+  const timeStamp = Date.now()
+  return date.formatDate(timeStamp, 'DD MMMM, YYYY')
+})
 
+function add(status, element) {
+  element.status = status
+  store.updateStaff(element.id, element)
+}
+function remove(status, element) {
+  if (element.status === status) {
+    element.status = ''
+    store.updateStaff(element.id, element)
+  }
+}
+function update(status) {
+  let el = element.value
+  if (el.status !== status) {
+    // its changed
+    remove(el.status, el)
+    add(status, el)
+  }
+
+  prompt.value = false
+}
+function showModal(event) {
+  element.value = event
+  prompt.value = true
+}
 </script>
 
+<style scoped lang="scss">
+.smaller {
+  span.block {
+    font-size: .5rem;
+  }
+}
+</style>

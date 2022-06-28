@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Staff Whereabouts
+          Where abouts
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -21,6 +21,7 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
+      width="150"
     >
       <q-list>
         <q-item-label
