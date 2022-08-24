@@ -10,6 +10,9 @@ docker-compose up -d
 
 Once installed you can access the dev site on port 9000. e.g. localhost:9000
 
+Drupal backend on port 8000 e.g. localhost:8000
+
+IMPORTANT! For some reason it only loads on Firefox
 
 **Common commands**
 
