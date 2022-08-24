@@ -22,8 +22,8 @@
         <kanban-list
           title="Working Remotely"
           icon="work_outline"
-          header-css="bg-blue text-white"
-          body-css="bg-blue-1"
+          header-css="bg-green text-white"
+          body-css="bg-green-1"
           :list="store.getStaffWorkingRemotely"
           badge-colour="blue"
           @add="add('working-remotely', $event)"
@@ -42,6 +42,20 @@
           badge-colour="blue-grey-5"
           @add="add('out-of-office', $event)"
           @remove="remove('out-of-office', $event)"
+          @item-click="showModal"
+          />
+      </div>
+      <!-- On Duty Travel -->
+      <div :class="spacingCss">
+        <kanban-list
+          title="On Duty Travel"
+          icon="travel_explore"
+          header-css="bg-blue text-white"
+          body-css="bg-blue-1"
+          :list="store.getStaffOnDutyTravel"
+          badge-colour="blue-grey-5"
+          @add="add('duty-travel', $event)"
+          @remove="remove('duty-travel', $event)"
           @item-click="showModal"
           />
       </div>
@@ -78,7 +92,7 @@ const store = useStoreStaff()
 
 store.dReadData()
 
-const spacingCss = "col-xs-12 col-md-3 col-lg-3"
+const spacingCss = "col-xs-12 col-md-2 col-lg-2"
 
 const prompt = ref(false)
 const element = ref(null)

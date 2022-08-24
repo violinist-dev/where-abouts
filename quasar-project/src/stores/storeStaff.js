@@ -97,6 +97,9 @@ export const useStoreStaff = defineStore("useStoreStaff", {
     getStaffOnLeave(state) {
       return this.getStaffByStatus("on-leave", state)
     },
+    getStaffOnDutyTravel(state) {
+      return this.getStaffByStatus("duty-travel", state)
+    },
   },
 
   actions: {
@@ -129,11 +132,13 @@ export const useStoreStaff = defineStore("useStoreStaff", {
       }
     },
     dReadData() {
-      const uri = "/jsonapi/node/wb_people?include=field_avatar&fields[file--file]=uri,url"
+      const uri =
+        "/jsonapi/node/wb_people?include=field_avatar&fields[file--file]=uri,url"
       this.dProcessPeople(uri)
     },
     dProcessPeople(uri) {
-      api.get(uri)
+      api
+        .get(uri)
         .then((response) => {
           const mapper = {
             // id: 7,
@@ -169,15 +174,14 @@ export const useStoreStaff = defineStore("useStoreStaff", {
                 }
               })
 
-              // todo - currently not working cos of 404 error on drupal
               if (mKey === "avatar") {
                 let key = mapper[mKey]
                 if (key in relationships && relationships[key].data) {
                   let id = relationships[key].data.id,
-                    result = personIncluded.filter((incl) => incl.id === id);
+                    result = personIncluded.filter((incl) => incl.id === id)
 
                   if (result.length) {
-                    person[mKey] = result[0].attributes.uri.url;
+                    person[mKey] = result[0].attributes.uri.url
                   }
                 }
               }
@@ -194,7 +198,7 @@ export const useStoreStaff = defineStore("useStoreStaff", {
 
           if ("next" in personLinks) {
             if ("href" in personLinks.next) {
-              this.dProcessPeople(personLinks.next.href);
+              this.dProcessPeople(personLinks.next.href)
             }
           }
         })
@@ -205,33 +209,34 @@ export const useStoreStaff = defineStore("useStoreStaff", {
     dUpdateData(id, payload) {
       const options = {
         headers: {
-          "Accept": "application/vnd.api+json",
+          Accept: "application/vnd.api+json",
           "Content-Type": "application/vnd.api+json",
         },
         auth: {
           username: "admin",
           password: "123",
         },
-      };
-
-      let uri = "jsonapi/node/wb_people/" + id;
-      let data = {
-        "data": {
-          "type": "node--wb_people",
-          "id": id,
-          "attributes": {
-            "field_status": payload.status
-          }
-        }
       }
 
-      api.patch(uri, data, options)
+      let uri = "jsonapi/node/wb_people/" + id
+      let data = {
+        data: {
+          type: "node--wb_people",
+          id: id,
+          attributes: {
+            field_status: payload.status,
+          },
+        },
+      }
+
+      api
+        .patch(uri, data, options)
         .then((response) => {
-          console.log('updated')
+          console.log("updated")
         })
         .catch((error) => {
           console.log("error", error)
         })
-    }
+    },
   },
 })
