@@ -8,10 +8,14 @@ description: ''
 weight: 0
 folder: ../config/dev
 module:
+  datatables: 0
   devel: 0
   devel_generate: 0
+  views_ui: 0
+  views: 10
 theme: {  }
 blacklist: {  }
-graylist: {  }
+graylist:
+  - system.site
 graylist_dependents: true
 graylist_skip_equal: true
