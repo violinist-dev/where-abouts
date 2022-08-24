@@ -125,7 +125,7 @@ export const useStoreStaff = defineStore("useStoreStaff", {
       let staff = this.getStaff(id)
       if (staff) {
         staff = setUpdatedDate(payload, staff)
-        console.log('updated')
+        this.dUpdateData(id, payload)
       }
     },
     dReadData() {
@@ -138,7 +138,7 @@ export const useStoreStaff = defineStore("useStoreStaff", {
             // id: 7,
             name: "title",
             email: "field_email",
-            // avatar: "field_avatar",
+            avatar: "field_avatar",
             status: "field_status",
             // team: "",
             // tags: [],
@@ -168,26 +168,23 @@ export const useStoreStaff = defineStore("useStoreStaff", {
               })
 
               // todo - currently not working cos of 404 error on drupal
-              // if (mKey === "avatar") {
-              //   let key = mapper[mKey]
-              //   if (key in relationships) {
+              if (mKey === "avatar") {
+                let key = mapper[mKey]
+                if (key in relationships && relationships[key].data) {
+                  let id = relationships[key].data.id,
+                    result = personIncluded.filter((incl) => incl.id === id);
 
-              //     let id = relationships[key].data.id,
-              //       result = personIncluded.filter((incl) => incl.id === id)
-
-              //     if (result.length) {
-              //       person[mKey] = result[0].attributes.uri.url;
-              //     }
-              //   }
-              // }
+                  if (result.length) {
+                    person[mKey] = result[0].attributes.uri.url;
+                  }
+                }
+              }
             })
 
             if (this.getStaff(person.id)) {
               // already exists update their details
-              console.log("updating")
               this.updateStaff(person.id, person)
             } else {
-              console.log("adding")
               this.addStaff(person, person.id)
             }
             person = {}
@@ -197,5 +194,36 @@ export const useStoreStaff = defineStore("useStoreStaff", {
           console.log("error", error)
         })
     },
+    dUpdateData(id, payload) {
+      const options = {
+        headers: {
+          "Accept": "application/vnd.api+json",
+          "Content-Type": "application/vnd.api+json",
+        },
+        auth: {
+          username: "admin",
+          password: "123",
+        },
+      };
+
+      let uri = "jsonapi/node/wb_people/" + id;
+      let data = {
+        "data": {
+          "type": "node--wb_people",
+          "id": id,
+          "attributes": {
+            "field_status": payload.status
+          }
+        }
+      }
+
+      api.patch(uri, data, options)
+        .then((response) => {
+          console.log('updated')
+        })
+        .catch((error) => {
+          console.log("error", error)
+        })
+    }
   },
 })

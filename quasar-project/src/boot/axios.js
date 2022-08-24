@@ -1,11 +1,24 @@
-import { boot } from "quasar/wrappers";
-import axios from "axios";
+import { boot } from "quasar/wrappers"
+import axios from "axios"
+import { LocalStorage } from "quasar"
 
-const api = axios.create({ baseURL: "http://localhost:8000" });
+let config = {
+  baseURL: "http://localhost:8000",
+}
+const authToken = LocalStorage.getItem("auth_token")
+const csrfToken = LocalStorage.getItem("csrf_token")
+if (authToken && csrfToken) {
+  config["Authorization"] = `Basic ${authToken}`
+  config["CSRF-Token"] = csrfToken
+}
+
+console.log('axios', config);
+
+const api = axios.create(config)
 
 export default boot(({ app }) => {
-  app.config.globalProperties.$axios = axios;
-  app.config.globalProperties.$api = api;
-});
+  app.config.globalProperties.$axios = axios
+  app.config.globalProperties.$api = api
+})
 
-export { axios, api };
+export { axios, api }

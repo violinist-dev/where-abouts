@@ -1,7 +1,6 @@
 <template>
   <q-page class="q-pa-md">
-    <div class="q-pb-md text-weight-medium">For {{ todaysDate }}</div>
-    <div class="q-pb-md text-caption">Update peoples where abouts by dragging their names to the appropriate area (desktop only). You can also click on them to select a status. </div>
+    <div class="q-pb-md text-caption">Update peoples Whereabouts by dragging their names to the appropriate area (desktop only). You can also click on them to select a status. </div>
 
     <div class="board row q-col-gutter-md">
       <!-- in the office -->
@@ -70,7 +69,6 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { date } from 'quasar'
 import { useStoreStaff } from 'stores/storeStaff'
 
 import KanbanList from 'components/Kanban/KanbanList.vue'
@@ -80,14 +78,10 @@ const store = useStoreStaff()
 
 store.dReadData()
 
-const spacingCss = "col-xs-12 col-sm-6 col-lg-3"
+const spacingCss = "col-xs-12 col-md-3 col-lg-3"
 
 const prompt = ref(false)
 const element = ref(null)
-const todaysDate = computed(() => {
-  const timeStamp = Date.now()
-  return date.formatDate(timeStamp, 'DD MMMM, YYYY')
-})
 
 function add(status, element) {
   element.status = status

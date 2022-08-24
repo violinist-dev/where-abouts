@@ -1,8 +1,8 @@
 {
   "name": "where-abouts",
   "version": "0.0.1",
-  "description": "Kanban board of peopls where abouts",
-  "productName": "Where abouts",
+  "description": "Kanban board of peopls Whereabouts",
+  "productName": "Whereabouts",
   "author": "Ainsof So'o <ainsofs@sprep.org>",
   "private": true,
   "scripts": {

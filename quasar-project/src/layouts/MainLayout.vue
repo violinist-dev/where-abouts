@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh lpR fFf">
     <q-header>
       <q-toolbar>
         <q-btn
@@ -12,8 +12,9 @@
         />
 
         <q-toolbar-title>
-          Where abouts
+          Whereabouts
         </q-toolbar-title>
+        {{ todaysDate }}
       </q-toolbar>
     </q-header>
 
@@ -21,7 +22,7 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      width="150"
+      :width="150"
     >
       <q-list>
         <q-item-label
@@ -45,7 +46,8 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
+import { date } from 'quasar'
 import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
@@ -67,6 +69,10 @@ export default defineComponent({
     const leftDrawerOpen = ref(false)
 
     return {
+      todaysDate: computed(() => {
+        const timeStamp = Date.now()
+        return date.formatDate(timeStamp, 'DD MMMM, YYYY')
+      }),
       essentialLinks: linksList,
       leftDrawerOpen,
       toggleLeftDrawer () {
