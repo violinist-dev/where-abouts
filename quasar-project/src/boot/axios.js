@@ -12,8 +12,6 @@ if (authToken && csrfToken) {
   config["CSRF-Token"] = csrfToken
 }
 
-console.log('axios', config);
-
 const api = axios.create(config)
 
 export default boot(({ app }) => {

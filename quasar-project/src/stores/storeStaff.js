@@ -129,10 +129,11 @@ export const useStoreStaff = defineStore("useStoreStaff", {
       }
     },
     dReadData() {
-      api
-        .get(
-          "/jsonapi/node/wb_people?include=field_avatar&fields[file--file]=uri,url"
-        )
+      const uri = "/jsonapi/node/wb_people?include=field_avatar&fields[file--file]=uri,url"
+      this.dProcessPeople(uri)
+    },
+    dProcessPeople(uri) {
+      api.get(uri)
         .then((response) => {
           const mapper = {
             // id: 7,
@@ -149,7 +150,8 @@ export const useStoreStaff = defineStore("useStoreStaff", {
           }
 
           let personData = response.data.data,
-            personIncluded = response.data.included
+            personIncluded = response.data.included,
+            personLinks = response.data.links
 
           personData.forEach((wb_person) => {
             let attributes = wb_person.attributes,
@@ -189,6 +191,12 @@ export const useStoreStaff = defineStore("useStoreStaff", {
             }
             person = {}
           })
+
+          if ("next" in personLinks) {
+            if ("href" in personLinks.next) {
+              this.dProcessPeople(personLinks.next.href);
+            }
+          }
         })
         .catch((error) => {
           console.log("error", error)
