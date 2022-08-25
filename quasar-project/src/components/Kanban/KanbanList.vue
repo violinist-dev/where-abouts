@@ -1,16 +1,19 @@
 <template>
   <div class="rounded-borders" >
     <q-toolbar :class="props.headerCss">
-      <q-toolbar-title>
-        <q-icon :name="props.icon" class="q-pb-xs" />
+      <q-toolbar-title class="q-pt-sm">
+        <q-btn dense round flat :icon="props.icon">
+          <q-badge v-if="listLength" color="white" text-color="blue-grey-14" rounded floating transparent >
+            {{ listLength }}
+          </q-badge>
+        </q-btn>
         {{ props.title }}
-        <q-badge v-if="listLength" rounded align="middle" color="white" :text-color="props.badgeColour">{{ listLength }}</q-badge>
       </q-toolbar-title>
     </q-toolbar>
     <q-list bordered class="bg-grey-1">
       <draggable
         class="list-group"
-        :list="props.list"
+        :list="filteredList"
         @change="log"
         itemKey="id"
         :component-data="{
@@ -26,6 +29,27 @@
           <kanban-item :element="element" @click="click(element)" />
         </template>
       </draggable>
+
+      <!-- footer buttons -->
+      <!-- show -->
+      <q-item v-if="listLimit" @click="showMore" class="q-my-sm" clickable v-ripple>
+        <q-item-section>
+          <q-item-label>Show more</q-item-label>
+        </q-item-section>
+        <q-item-section side>
+          <q-icon name="keyboard_arrow_down"  />
+        </q-item-section>
+      </q-item>
+
+      <!-- hide -->
+      <q-item v-else @click="listLimit = 5" class="q-my-sm" clickable v-ripple>
+        <q-item-section>
+          <q-item-label>Show less</q-item-label>
+        </q-item-section>
+        <q-item-section side>
+          <q-icon name="expand_less"  />
+        </q-item-section>
+      </q-item>
     </q-list>
   </div>
 </template>
@@ -46,8 +70,28 @@ const listLength  = computed(() => {
   return props.list.length
 })
 
+const listLimit = ref(5)
+
+const filteredList = computed(() => {
+  let limit = listLimit.value
+  if (limit > 0) {
+    return props.list.slice(0, limit)
+  }
+
+  return props.list
+})
+
 function click(element) {
   emit('item-click', element)
+}
+
+function showMore() {
+  let increment = 10
+  listLimit.value = listLimit.value + increment
+
+  if (listLimit.value > listLength.value) {
+    listLimit.value = 0
+  }
 }
 
 function log(evt) {
