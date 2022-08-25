@@ -57,7 +57,7 @@ export const useStoreStaff = defineStore("useStoreStaff", {
         (staff) =>
           staff.status === status &&
           staff.name.toLowerCase().includes(state.staffFilter.toLowerCase())
-      );
+      )
 
       return filter
     },
@@ -82,7 +82,7 @@ export const useStoreStaff = defineStore("useStoreStaff", {
     },
     dReadData() {
       const uri =
-        "/jsonapi/node/wb_people?sort=title&include=field_avatar&fields[file--file]=uri,url"
+        "/jsonapi/node/wb_people?sort=title&include=field_avatar,field_teams&fields[file--file]=uri,url&fields[taxonomy_term--teams]=name"
       this.dProcessPeople(uri)
     },
     dProcessPeople(uri) {
@@ -95,7 +95,7 @@ export const useStoreStaff = defineStore("useStoreStaff", {
             email: "field_email",
             avatar: "field_avatar",
             status: "field_status",
-            // teams: [],
+            teams: "field_teams",
             dateAdded: "created",
             dateUpdated: "changed",
             // addedBy: "",
@@ -131,6 +131,21 @@ export const useStoreStaff = defineStore("useStoreStaff", {
                   if (result.length) {
                     person[mKey] = result[0].attributes.uri.url
                   }
+                }
+              }
+              else if (mKey === "teams") {
+                person[mKey] = []
+                let key = mapper[mKey]
+                if (key in relationships && relationships[key].data) {
+                  // Could be multiple teams.
+                  relationships[key].data.forEach((data) => {
+                    let id = data.id,
+                      result = personIncluded.filter((incl) => incl.id === id)
+
+                    if (result.length) {
+                      person[mKey].push(result[0].attributes.name)
+                    }
+                  })
                 }
               }
             })
