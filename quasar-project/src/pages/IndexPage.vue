@@ -9,12 +9,23 @@
       debounce="500"
       v-model="store.staffFilter"
       placeholder="Search by staff name"
+      label="Staff name"
       class="q-pb-md"
       type="search">
       <template v-slot:append>
         <q-icon name="search" />
       </template>
     </q-input>
+
+    <q-select
+      rounded
+      outlined
+      dense
+      debounce="500"
+      v-model="store.staffTeam"
+      :options="options"
+      class="q-pb-md"
+      label="Teams" />
 
     <div class="board row q-col-gutter-md">
       <!-- in the office -->
@@ -110,6 +121,17 @@ const spacingCss = "col-xs-12 col-md-3 col-lg-2"
 
 const prompt = ref(false)
 const element = ref(null)
+
+const options = ref([
+  'GO- Governance and Operations (IT, KM, PCU, Strategic Planning, FA, HR)',
+  'EO- Executive Office (Exec Support, Legal, IA, Comms)',
+  'CCR- Climate Change Resilience',
+  'EMG- Environmental Management and Governance',
+  'IOE- Islands and Ocean Ecosystems',
+  'WMPC- Waste Management and Pollution Control',
+  'IT',
+  '',
+])
 
 function add(status, element) {
   element.status = status

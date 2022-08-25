@@ -27,6 +27,7 @@ export const useStoreStaff = defineStore("useStoreStaff", {
       // },
     ],
     staffFilter: "",
+    staffTeam: "",
   }),
 
   getters: {
@@ -58,6 +59,13 @@ export const useStoreStaff = defineStore("useStoreStaff", {
           staff.status === status &&
           staff.name.toLowerCase().includes(state.staffFilter.toLowerCase())
       )
+
+      if (state.staffTeam) {
+        filter = filter.filter(
+          (staff) =>
+            staff.teams.includes(state.staffTeam)
+        )
+      }
 
       return filter
     },
