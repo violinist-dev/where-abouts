@@ -3,11 +3,11 @@
     <q-toolbar :class="props.headerCss">
       <q-toolbar-title class="q-pt-sm">
         <q-btn dense round flat :icon="props.icon">
-          <q-badge v-if="listLength" color="white" text-color="blue-grey-14" rounded floating transparent >
-            {{ listLength }}
-          </q-badge>
         </q-btn>
         {{ props.title }}
+        <q-badge v-if="listLength" color="grey-14" rounded floating>
+          {{ listLength }}
+        </q-badge>
       </q-toolbar-title>
     </q-toolbar>
     <q-list bordered class="bg-grey-1">
@@ -31,25 +31,27 @@
       </draggable>
 
       <!-- footer buttons -->
-      <!-- show -->
-      <q-item v-if="listLimit" @click="showMore" class="q-my-sm" clickable v-ripple>
-        <q-item-section>
-          <q-item-label>Show more</q-item-label>
-        </q-item-section>
-        <q-item-section side>
-          <q-icon name="keyboard_arrow_down"  />
-        </q-item-section>
-      </q-item>
+      <div v-if="showFooter">
+        <!-- show -->
+        <q-item v-if="listLimit" @click="showMore" class="q-my-sm" clickable v-ripple>
+          <q-item-section>
+            <q-item-label>Show more</q-item-label>
+          </q-item-section>
+          <q-item-section side>
+            <q-icon name="keyboard_arrow_down"  />
+          </q-item-section>
+        </q-item>
 
-      <!-- hide -->
-      <q-item v-else @click="listLimit = 5" class="q-my-sm" clickable v-ripple>
-        <q-item-section>
-          <q-item-label>Show less</q-item-label>
-        </q-item-section>
-        <q-item-section side>
-          <q-icon name="expand_less"  />
-        </q-item-section>
-      </q-item>
+        <!-- hide -->
+        <q-item v-else @click="listLimit = 5" class="q-my-sm" clickable v-ripple>
+          <q-item-section>
+            <q-item-label>Show less</q-item-label>
+          </q-item-section>
+          <q-item-section side>
+            <q-icon name="expand_less"  />
+          </q-item-section>
+        </q-item>
+      </div>
     </q-list>
   </div>
 </template>
@@ -68,6 +70,10 @@ const emit = defineEmits(['add', 'remove', 'item-click'])
 
 const listLength  = computed(() => {
   return props.list.length
+})
+
+const showFooter = computed(() => {
+  return listLimit.value < listLength.value
 })
 
 const listLimit = ref(5)
@@ -89,7 +95,7 @@ function showMore() {
   let increment = 10
   listLimit.value = listLimit.value + increment
 
-  if (listLimit.value > listLength.value) {
+  if (listLimit.value >= listLength.value) {
     listLimit.value = 0
   }
 }
@@ -123,7 +129,7 @@ const dragOptions = computed(() => {
 
 <style scoped lang="scss">
 .list-group {
-  min-height: 25px
+  min-height: 25px;
 }
 .flip-list-move {
   transition: transform 0.5s;

@@ -2,6 +2,20 @@
   <q-page class="q-pa-md">
     <div class="q-pb-md text-caption">Update peoples Whereabouts by dragging their names to the appropriate area (desktop only). You can also click on them to select a status. </div>
 
+    <q-input
+      rounded
+      outlined
+      dense
+      debounce="500"
+      v-model="store.staffFilter"
+      placeholder="Search by staff name"
+      class="q-pb-md"
+      type="search">
+      <template v-slot:append>
+        <q-icon name="search" />
+      </template>
+    </q-input>
+
     <div class="board row q-col-gutter-md">
       <!-- in the office -->
       <div :class="spacingCss">
@@ -92,7 +106,7 @@ const store = useStoreStaff()
 
 store.dReadData()
 
-const spacingCss = "col-xs-12 col-md-2 col-lg-2"
+const spacingCss = "col-xs-12 col-md-3 col-lg-2"
 
 const prompt = ref(false)
 const element = ref(null)
