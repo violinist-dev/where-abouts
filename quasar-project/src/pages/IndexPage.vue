@@ -1,31 +1,36 @@
 <template>
   <q-page class="q-pa-md">
-    <div class="q-pb-md text-caption">Update peoples Whereabouts by dragging their names to the appropriate area (desktop only). You can also click on them to select a status. </div>
+    <div class="q-pb-md text-body2">Update peoples Whereabouts by dragging their names to the appropriate area (desktop only). You can also click on them to select a status. </div>
 
-    <q-input
-      rounded
-      outlined
-      dense
-      debounce="500"
-      v-model="store.staffFilter"
-      placeholder="Search by staff name"
-      label="Staff name"
-      class="q-pb-md"
-      type="search">
-      <template v-slot:append>
-        <q-icon name="search" />
-      </template>
-    </q-input>
+    <div class="q-pb-sm text-caption">Filters</div>
 
-    <q-select
-      rounded
-      outlined
-      dense
-      debounce="500"
-      v-model="store.staffTeam"
-      :options="options"
-      class="q-pb-md"
-      label="Teams" />
+    <div class="filters q-pb-md row q-col-gutter-sm">
+
+      <q-select
+        rounded
+        outlined
+        dense
+        v-model="store.staffTeam"
+        :options="options"
+        class="col-xs-12 col-sm-6"
+        label="Teams" />
+
+      <q-input
+        rounded
+        outlined
+        dense
+        debounce="500"
+        v-model="store.staffFilter"
+        placeholder="Search by staff name"
+        label="Staff name"
+        class="col-xs-12 col-sm-6"
+        type="search">
+        <template v-slot:append>
+          <q-icon name="search" />
+        </template>
+      </q-input>
+
+    </div>
 
     <div class="board row q-col-gutter-md">
       <!-- in the office -->
@@ -158,11 +163,3 @@ function showModal(event) {
   prompt.value = true
 }
 </script>
-
-<style scoped lang="scss">
-.smaller {
-  span.block {
-    font-size: .5rem;
-  }
-}
-</style>
