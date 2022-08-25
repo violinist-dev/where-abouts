@@ -1,0 +1,8 @@
+uuid: 5f05f81f-fccd-42cf-9d86-0b7cbdfdf088
+langcode: en
+status: true
+dependencies: {  }
+name: Teams
+vid: teams
+description: ''
+weight: 0

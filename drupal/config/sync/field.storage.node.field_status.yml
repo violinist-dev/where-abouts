@@ -13,16 +13,19 @@ settings:
   allowed_values:
     -
       value: in-the-office
-      label: in-the-office
+      label: 'In The Office'
     -
       value: working-remotely
-      label: working-remotely
+      label: 'Working Remotely'
     -
       value: out-of-office
-      label: out-of-office
+      label: 'Out of Office'
     -
       value: on-leave
-      label: on-leave
+      label: 'On Leave'
+    -
+      value: duty-travel
+      label: 'On Duty Travel'
   allowed_values_function: ''
 module: options
 locked: false

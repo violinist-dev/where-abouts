@@ -1,0 +1,29 @@
+uuid: c4a23092-5043-49a3-a0e5-cc01c4ea625e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_teams
+    - node.type.wb_people
+    - taxonomy.vocabulary.teams
+id: node.wb_people.field_teams
+field_name: field_teams
+entity_type: node
+bundle: wb_people
+label: Teams
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      teams: teams
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

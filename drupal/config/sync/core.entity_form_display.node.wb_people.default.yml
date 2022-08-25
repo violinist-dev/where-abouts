@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.wb_people.field_avatar
     - field.field.node.wb_people.field_email
     - field.field.node.wb_people.field_status
+    - field.field.node.wb_people.field_teams
     - image.style.thumbnail
     - node.type.wb_people
   module:
@@ -42,6 +43,16 @@ content:
     weight: 122
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_teams:
+    type: entity_reference_autocomplete
+    weight: 124
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   promote:
     type: boolean_checkbox

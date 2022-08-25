@@ -7,6 +7,7 @@ dependencies:
     - field.field.node.wb_people.field_avatar
     - field.field.node.wb_people.field_email
     - field.field.node.wb_people.field_status
+    - field.field.node.wb_people.field_teams
     - node.type.wb_people
   module:
     - user
@@ -24,3 +25,4 @@ hidden:
   field_avatar: true
   field_email: true
   field_status: true
+  field_teams: true
