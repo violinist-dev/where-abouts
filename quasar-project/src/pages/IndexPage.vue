@@ -1,20 +1,36 @@
 <template>
   <q-page class="q-pa-md">
-    <div class="q-pb-md text-caption">Update peoples Whereabouts by dragging their names to the appropriate area (desktop only). You can also click on them to select a status. </div>
+    <div class="q-pb-md text-body2">Update peoples Whereabouts by dragging their names to the appropriate area (desktop only). You can also click on them to select a status. </div>
 
-    <q-input
-      rounded
-      outlined
-      dense
-      debounce="500"
-      v-model="store.staffFilter"
-      placeholder="Search by staff name"
-      class="q-pb-md"
-      type="search">
-      <template v-slot:append>
-        <q-icon name="search" />
-      </template>
-    </q-input>
+    <div class="q-pb-sm text-caption">Filters</div>
+
+    <div class="filters q-pb-md row q-col-gutter-sm">
+
+      <q-select
+        rounded
+        outlined
+        dense
+        v-model="store.staffTeam"
+        :options="options"
+        class="col-xs-12 col-sm-6"
+        label="Teams" />
+
+      <q-input
+        rounded
+        outlined
+        dense
+        debounce="500"
+        v-model="store.staffFilter"
+        placeholder="Search by staff name"
+        label="Staff name"
+        class="col-xs-12 col-sm-6"
+        type="search">
+        <template v-slot:append>
+          <q-icon name="search" />
+        </template>
+      </q-input>
+
+    </div>
 
     <div class="board row q-col-gutter-md">
       <!-- in the office -->
@@ -111,6 +127,17 @@ const spacingCss = "col-xs-12 col-md-3 col-lg-2"
 const prompt = ref(false)
 const element = ref(null)
 
+const options = ref([
+  'GO- Governance and Operations (IT, KM, PCU, Strategic Planning, FA, HR)',
+  'EO- Executive Office (Exec Support, Legal, IA, Comms)',
+  'CCR- Climate Change Resilience',
+  'EMG- Environmental Management and Governance',
+  'IOE- Islands and Ocean Ecosystems',
+  'WMPC- Waste Management and Pollution Control',
+  'IT',
+  '',
+])
+
 function add(status, element) {
   element.status = status
   store.updateStaff(element.id, element)
@@ -136,11 +163,3 @@ function showModal(event) {
   prompt.value = true
 }
 </script>
-
-<style scoped lang="scss">
-.smaller {
-  span.block {
-    font-size: .5rem;
-  }
-}
-</style>

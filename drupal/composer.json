@@ -31,6 +31,8 @@
     "require-dev": {
         "drupal/datatables": "^2.0",
         "drupal/devel": "^4.1",
+        "drupal/views_bulk_edit": "^2.6",
+        "drupal/views_bulk_operations": "^4.1",
         "mglaman/drupal-check": "^1.2",
         "phpcompatibility/php-compatibility": "^9.3"
     },

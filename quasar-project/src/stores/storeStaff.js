@@ -15,8 +15,7 @@ export const useStoreStaff = defineStore("useStoreStaff", {
       //   email: "charlier@discuz.net",
       //   letter: "C",
       //   status: "in-the-office",
-      //   team: "",
-      //   tags: [],
+      //   teams: [],
       // },
       // {
       //   id: 2,
@@ -24,65 +23,11 @@ export const useStoreStaff = defineStore("useStoreStaff", {
       //   email: "christians@marketwatch.com",
       //   letter: "C",
       //   status: "in-the-office",
-      //   team: "",
-      //   tags: [],
-      // },
-      // {
-      //   id: 3,
-      //   name: "Epeli Tagi",
-      //   email: "epelit@microsoft.com",
-      //   letter: "E",
-      //   status: "in-the-office",
-      //   team: "",
-      //   tags: [],
-      // },
-      // {
-      //   id: 4,
-      //   name: "Seka Fawdrey",
-      //   email: "sfawdrey3@wired.com",
-      //   letter: "S",
-      //   status: "in-the-office",
-      //   team: "",
-      //   tags: [],
-      // },
-      // {
-      //   id: 5,
-      //   name: "Brunhilde Panswick",
-      //   email: "bpanswick4@csmonitor.com",
-      //   avatar: "avatar2.jpg",
-      //   status: "working-remotely",
-      //   team: "",
-      //   tags: [],
-      // },
-      // {
-      //   id: 6,
-      //   name: "Winfield Stapforth",
-      //   email: "wstapforth5@pcworld.com",
-      //   avatar: "avatar6.jpg",
-      //   status: "working-remotely",
-      //   team: "",
-      //   tags: [],
-      // },
-      // {
-      //   id: 7,
-      //   name: "Ainsof So'o",
-      //   email: "ainsofs@csmonitor.com",
-      //   avatar: "avatar4.jpg",
-      //   status: "in-the-office",
-      //   team: "",
-      //   tags: [],
-      // },
-      // {
-      //   id: 8,
-      //   name: "Billy Chan-Ting",
-      //   email: "billyc@pcworld.com",
-      //   avatar: "avatar1.jpg",
-      //   status: "in-the-office",
-      //   team: "",
-      //   tags: [],
+      //   teams: [],
       // },
     ],
     staffFilter: "",
+    staffTeam: "",
   }),
 
   getters: {
@@ -113,7 +58,14 @@ export const useStoreStaff = defineStore("useStoreStaff", {
         (staff) =>
           staff.status === status &&
           staff.name.toLowerCase().includes(state.staffFilter.toLowerCase())
-      );
+      )
+
+      if (state.staffTeam) {
+        filter = filter.filter(
+          (staff) =>
+            staff.teams.includes(state.staffTeam)
+        )
+      }
 
       return filter
     },
@@ -138,7 +90,7 @@ export const useStoreStaff = defineStore("useStoreStaff", {
     },
     dReadData() {
       const uri =
-        "/jsonapi/node/wb_people?include=field_avatar&fields[file--file]=uri,url"
+        "/jsonapi/node/wb_people?sort=title&include=field_avatar,field_teams&fields[file--file]=uri,url&fields[taxonomy_term--teams]=name"
       this.dProcessPeople(uri)
     },
     dProcessPeople(uri) {
@@ -151,8 +103,7 @@ export const useStoreStaff = defineStore("useStoreStaff", {
             email: "field_email",
             avatar: "field_avatar",
             status: "field_status",
-            // team: "",
-            // tags: [],
+            teams: "field_teams",
             dateAdded: "created",
             dateUpdated: "changed",
             // addedBy: "",
@@ -188,6 +139,21 @@ export const useStoreStaff = defineStore("useStoreStaff", {
                   if (result.length) {
                     person[mKey] = result[0].attributes.uri.url
                   }
+                }
+              }
+              else if (mKey === "teams") {
+                person[mKey] = []
+                let key = mapper[mKey]
+                if (key in relationships && relationships[key].data) {
+                  // Could be multiple teams.
+                  relationships[key].data.forEach((data) => {
+                    let id = data.id,
+                      result = personIncluded.filter((incl) => incl.id === id)
+
+                    if (result.length) {
+                      person[mKey].push(result[0].attributes.name)
+                    }
+                  })
                 }
               }
             })
