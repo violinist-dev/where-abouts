@@ -77,8 +77,10 @@ services:
     - ./:/var/www/html:cached
 # ## Alternative for macOS users: Mutagen https://wodby.com/docs/stacks/drupal/local#docker-for-mac
 # #    - drupal:/var/www/html
-#     labels:
-#     - "traefik.http.routers.${PROJECT_NAME}_nginx.rule=Host(`${PROJECT_BASE_URL}`)"
+    labels:
+    - "traefik.http.routers.${PROJECT_NAME}_nginx.rule=Host(`${PROJECT_BASE_URL}`)"
+    - "traefik.http.routers.${PROJECT_NAME}_proxy.entrypoints=websecure"
+    - "traefik.http.routers.${PROJECT_NAME}_proxy.tls.certresolver=myresolver"
 #     ports:
 #     - 8000:80
 
@@ -218,6 +220,7 @@ services:
 
   quasar:
     # image: wodby/node:$NODE_TAG
+    container_name: "${PROJECT_NAME}_quasar"
     build:
       context: ./build_images/quasar
       args:
@@ -225,16 +228,16 @@ services:
     container_name: "${PROJECT_NAME}_quasar"
     working_dir: /app/quasar-project/
     labels:
-    - "traefik.http.services.${PROJECT_NAME}_node.loadbalancer.server.port=3000"
-    - "traefik.http.routers.${PROJECT_NAME}_node.rule=Host(`node.${PROJECT_BASE_URL}`)"
+    - "traefik.http.services.${PROJECT_NAME}_quasar.loadbalancer.server.port=3000"
+    - "traefik.http.routers.${PROJECT_NAME}_quasar.rule=Host(`quasar.${PROJECT_BASE_URL}`)"
     expose:
     - "3000"
     volumes:
     - ./:/app
     command: sh -c 'yarn install && yarn dev'
-    ports:
-      - '8080:8080'
-      - '9000:9000'
+    # ports:
+    #   - '8080:8080'
+    #   - '9000:9000'
 
   # cypress:
   #   image: cypress/included:4.4.0
