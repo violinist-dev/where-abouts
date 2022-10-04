@@ -61,10 +61,10 @@
           @item-click="showModal"
           />
       </div>
-      <!-- Out of office -->
+      <!-- Away -->
       <div :class="spacingCss">
         <kanban-list
-          title="Out of Office"
+          title="Away"
           icon="comments_disabled"
           header-css="bg-blue-grey-5 text-white"
           body-css="bg-blue-grey-1"

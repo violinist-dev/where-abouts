@@ -19,7 +19,7 @@
     >
       <q-tab name="in-the-office" class="text-green" icon="work" title="In the Office" />
       <q-tab name="working-remotely" class="text-green" icon="work_outline" title="Working Remotely" />
-      <q-tab name="out-of-office" class="text-blue-grey-5" icon="comments_disabled" title="Out of Office" />
+      <q-tab name="out-of-office" class="text-blue-grey-5" icon="comments_disabled" title="Away" />
       <q-tab name="duty-travel" class="text-blue" icon="travel_explore" title="On Duty Travel" />
       <q-tab name="on-leave" class="text-grey" icon="beach_access" title="On Leave" />
     </q-tabs>
