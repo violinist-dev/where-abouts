@@ -565,9 +565,9 @@ camel-case@^3.0.0:
     upper-case "^1.1.1"
 
 caniuse-lite@^1.0.30001335, caniuse-lite@^1.0.30001349:
-  version "1.0.30001357"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001357.tgz#dec7fc4158ef6ad24690d0eec7b91f32b8cb1b5d"
-  integrity sha512-b+KbWHdHePp+ZpNj+RDHFChZmuN+J5EvuQUlee9jOQIUAdhv9uvAZeEtUeLAknXbkiu1uxjQ9NLp1ie894CuWg==
+  version "1.0.30001510"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001510.tgz"
+  integrity sha512-z35lD6xjHklPNgjW4P68R30Er5OCIZE0C1bUf8IMXSh34WJYXfIy+GxIEraQXYJ2dvTU8TumjYAeLrPhpMlsuw==
 
 chalk@^4.0.0, chalk@^4.0.2, chalk@^4.1.0, chalk@^4.1.1:
   version "4.1.2"
@@ -2207,9 +2207,9 @@ qs@6.10.3:
     side-channel "^1.0.4"
 
 quasar@^2.6.0:
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/quasar/-/quasar-2.7.3.tgz#ff57ac5f3c9a8fdc345f59362d7b0f45c80bc68d"
-  integrity sha512-4YQQP1FbfshXwav9QcOHpvSg4eME4iKzd85m4562EqcfuhRtycC/2WQg+cRxlEr43gEHM0uXaJmybNUWZpoYkw==
+  version "2.12.2"
+  resolved "https://registry.yarnpkg.com/quasar/-/quasar-2.12.2.tgz#f45923259449afb224afbac16f1e5c4a660c3f84"
+  integrity sha512-UB+J1cN6b9FrRphUuMvW1Pt1uaOPH2XJMAZagQlYzVUmltKCXQ0sby+ANgGRYa8w/tsekMySmN9QvkQ3+hYv/g==
 
 queue-microtask@^1.2.2:
   version "1.2.3"
