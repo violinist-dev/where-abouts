@@ -7,7 +7,7 @@ services:
       PHP_FPM_CLEAR_ENV: "no"
     volumes:
       - ./:/var/www/html
-      # - ./settings.docker.php:/var/www/html/drupal/web/sites/default/settings.local.php
+      - ./settings.docker.php:/var/www/html/drupal/web/sites/default/settings.local.php
       - ./docker-init/files/:/mnt/files
 
   crond:
@@ -17,12 +17,12 @@ services:
       PHP_FPM_CLEAR_ENV: "no"
     volumes:
       - ./:/var/www/html
-      # - ./settings.docker.php:/var/www/html/drupal/web/sites/default/settings.local.php
+      - ./settings.docker.php:/var/www/html/drupal/web/sites/default/settings.local.php
       - ./docker-init/files/:/mnt/files
 
   nginx:
-    ports:
-      - '8000:80'
+    # ports:
+    #   - '8000:80'
     environment:
       NGINX_SERVER_ROOT: /var/www/html/drupal/web
     volumes:

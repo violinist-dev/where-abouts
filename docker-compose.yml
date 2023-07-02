@@ -26,7 +26,7 @@ services:
       DB_PASSWORD: $DB_PASSWORD
       DB_NAME: $DB_NAME
       DB_DRIVER: $DB_DRIVER
-      DRUSH_OPTIONS_URI: "http://${PROJECT_BASE_URL}:8000"
+      DRUSH_OPTIONS_URI: "http://${PROJECT_BASE_URL}:${PROJECT_PORT}"
 #      PHP_FPM_USER: wodby
 #      PHP_FPM_GROUP: wodby
 #      COLUMNS: 80 # Set 80 columns for docker exec -it.
@@ -77,8 +77,8 @@ services:
     - ./:/var/www/html:cached
 # ## Alternative for macOS users: Mutagen https://wodby.com/docs/stacks/drupal/local#docker-for-mac
 # #    - drupal:/var/www/html
-#     labels:
-#     - "traefik.http.routers.${PROJECT_NAME}_nginx.rule=Host(`${PROJECT_BASE_URL}`)"
+    labels:
+    - "traefik.http.routers.${PROJECT_NAME}_nginx.rule=Host(`api.${PROJECT_BASE_URL}`)"
 #     ports:
 #     - 8000:80
 
@@ -225,16 +225,16 @@ services:
     container_name: "${PROJECT_NAME}_quasar"
     working_dir: /app/quasar-project/
     labels:
-    - "traefik.http.services.${PROJECT_NAME}_node.loadbalancer.server.port=3000"
-    - "traefik.http.routers.${PROJECT_NAME}_node.rule=Host(`node.${PROJECT_BASE_URL}`)"
+    - "traefik.http.services.${PROJECT_NAME}_node.loadbalancer.server.port=9000"
+    - "traefik.http.routers.${PROJECT_NAME}_node.rule=Host(`${PROJECT_BASE_URL}`)"
     expose:
-    - "3000"
+    - "9000"
     volumes:
     - ./:/app
     command: sh -c 'yarn install && yarn dev'
-    ports:
-      - '8080:8080'
-      - '9000:9000'
+    # ports:
+    #   - '8080:8080'
+    #   - '9000:9000'
 
   # cypress:
   #   image: cypress/included:4.4.0
@@ -316,15 +316,15 @@ services:
 #    - "--verbose"
 #    - "--whitelisted-ips="
 
-#   traefik:
-#     image: traefik:v2.0
-#     container_name: "${PROJECT_NAME}_traefik"
-#     command: --api.insecure=true --providers.docker
-#     ports:
-#     - '8000:80'
-# #    - '8080:8080' # Dashboard
-#     volumes:
-#       - /var/run/docker.sock:/var/run/docker.sock
+  traefik:
+    image: traefik:v2.0
+    container_name: "${PROJECT_NAME}_traefik"
+    command: --api.insecure=true --providers.docker
+    ports:
+    - '${PROJECT_PORT}:80'
+    - '8080:8080' # Dashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
 #x-mutagen:
 #  sync:
