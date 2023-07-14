@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for SPREP Whereabouts module.
+ *
+ * @DCG
+ * This file is no longer required in Drupal 8.
+ * @see https://www.drupal.org/node/2217931
+ */
+
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\field\FieldStorageConfigInterface;
+use Drupal\sprep_whereabouts\Plugin\Field\PermissionsField;
+
+/**
+ * Implements hook_entity_base_field_info_alter().
+ */
+function sprep_whereabouts_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type)
+{
+  if ($entity_type->id() == 'user') {
+    $fields['sw_permissions'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Permissions'))
+      ->setName('Permissions')
+      ->setDescription(t('Permissions.'))
+      ->setComputed(TRUE)
+      ->setCardinality(FieldStorageConfigInterface::CARDINALITY_UNLIMITED)
+      ->setClass(PermissionsField::class);
+  }
+}
