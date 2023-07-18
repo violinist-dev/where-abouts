@@ -5,11 +5,11 @@ import { Buffer } from 'buffer'
 
 export const useStoreAuthentication = defineStore('useStoreAuthentication', {
   state: () => ({
-    loggedIn: LocalStorage.getItem('loggedIn') || false,
+    loggedIn: false,
     isDownloaded: false,
-    logoutToken: LocalStorage.getItem('logout_token') || null,
-    csrfToken: LocalStorage.getItem('csrf_token') || null,
-    authHeader: LocalStorage.getItem('auth_header') || null,
+    logoutToken: null,
+    csrfToken: null,
+    authHeader: null,
     user: {
       drupal_internal__uid: 0,
       sw_permissions: [],
