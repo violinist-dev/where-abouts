@@ -11,18 +11,11 @@
 
     <q-item-section>
       <q-item-label>{{ element.name }}</q-item-label>
-      <q-item-label caption lines="1">{{ element.email }}</q-item-label>
-    </q-item-section>
-
-    <q-item-section side>
-      <q-icon name="chat_bubble" color="secondary" />
     </q-item-section>
   </q-item>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-
 // props and emits
 const props = defineProps(['element'])
 const emit = defineEmits(['click'])

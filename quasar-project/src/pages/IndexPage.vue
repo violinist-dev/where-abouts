@@ -38,19 +38,21 @@
     </div>
 
     <q-dialog v-model="prompt" persistent>
-      <set-status-modal :element="element" @update="update" />
+      <set-status-modal :element="element" @update="update" :can-update="canUpdate" />
     </q-dialog>
   </q-page>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useStoreStaff } from 'stores/storeStaff'
+import { useStoreAuthentication } from 'src/stores/storeAuthentication'
 
 import KanbanList from 'components/Kanban/KanbanList.vue'
 import SetStatusModal from 'components/Kanban/Modals/SetStatusModal.vue'
 
 const store = useStoreStaff()
+const authStore = useStoreAuthentication()
 
 store.dReadData()
 
@@ -60,6 +62,8 @@ const prompt = ref(false)
 const element = ref(null)
 
 const options = ref(['GO- Governance and Operations (IT, KM, PCU, Strategic Planning, FA, HR)', 'EO- Executive Office (Exec Support, Legal, IA, Comms)', 'CCR- Climate Change Resilience', 'EMG- Environmental Management and Governance', 'IOE- Islands and Ocean Ecosystems', 'WMPC- Waste Management and Pollution Control', 'IT', ''])
+
+const canUpdate = ref(true)
 
 function add(status, element) {
   element.status = status
@@ -73,6 +77,7 @@ function remove(status, element) {
 }
 function update(status) {
   let el = element.value
+  console.log(el)
   if (el.status !== status) {
     // its changed
     remove(el.status, el)
@@ -83,6 +88,11 @@ function update(status) {
 }
 function showModal(event) {
   element.value = event
+
+  const addedBy = element.value.addedBy
+  canUpdate.value = authStore.permissions.canEditAll ||
+    authStore.permissions.canEditOwn && Number(authStore.uid) === addedBy
+
   prompt.value = true
 }
 </script>

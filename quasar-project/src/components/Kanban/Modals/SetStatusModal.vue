@@ -20,9 +20,10 @@
 
     <q-card-actions align="right" class="text-grey">
       <q-btn flat label="Cancel" v-close-popup />
-      <q-btn @click="update" flat label="Update" class="text-primary" icon="save" />
+      <q-btn @click="update" flat label="Update" class="text-primary" icon="save" :disabled="!props.canUpdate" />
     </q-card-actions>
   </q-card>
+
 </template>
 
 <script setup>
@@ -32,7 +33,15 @@ import KanbanItem from 'components/Kanban/KanbanItem.vue'
 
 const $q = useQuasar()
 
-const props = defineProps(['element'])
+const props = defineProps({
+  element: {
+    type: Object,
+  },
+  canUpdate: {
+    type: Boolean,
+    default: false,
+  },
+})
 const emit = defineEmits(['update'])
 
 const tab = ref(props.element.status)

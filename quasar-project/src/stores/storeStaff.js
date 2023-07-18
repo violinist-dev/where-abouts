@@ -78,7 +78,7 @@ export const useStoreStaff = defineStore('useStoreStaff', {
       }
     },
     dReadData() {
-      const uri = '/jsonapi/node/wb_people?sort=title&include=field_avatar,field_teams&fields[file--file]=uri,url&fields[taxonomy_term--teams]=name'
+      const uri = '/jsonapi/node/wb_people?sort=title&include=field_avatar,field_teams&fields[file--file]=uri,url&fields[taxonomy_term--teams]=name&fields[node--wb_people]=title,field_avatar,field_teams,uid,field_email,field_status,created,changed'
       this.dProcessPeople(uri)
     },
     dProcessPeople(uri) {
@@ -94,7 +94,7 @@ export const useStoreStaff = defineStore('useStoreStaff', {
             teams: 'field_teams',
             dateAdded: 'created',
             dateUpdated: 'changed',
-            // addedBy: "",
+            addedBy: "uid",
             // updatedBy: "changed",
           }
 
@@ -141,6 +141,11 @@ export const useStoreStaff = defineStore('useStoreStaff', {
                       person[mKey].push(result[0].attributes.name)
                     }
                   })
+                }
+              } else if (mKey === 'addedBy') {
+                let key = mapper[mKey]
+                if (key in relationships && relationships[key].data) {
+                  person[mKey] = relationships[key].data.meta.drupal_internal__target_id
                 }
               }
             })
