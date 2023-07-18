@@ -23,6 +23,7 @@
         v-bind="dragOptions"
         @start="drag = true"
         @end="drag = false"
+        :move="move"
       >
         <template #item="{ element }">
           <kanban-item :element="element" @click="click(element)" />
@@ -64,7 +65,7 @@ import { useStoreAuthentication } from 'stores/storeAuthentication'
 
 const $q = useQuasar()
 
-const store = useStoreAuthentication()
+const authStore = useStoreAuthentication()
 
 const props = defineProps(['title', 'icon', 'headerCss', 'bodyCss', 'list', 'badgeColour'])
 // bodyCss is unused now
@@ -102,6 +103,17 @@ function showMore() {
   }
 }
 
+function move(evt) {
+  // console.log(evt.dragged.__draggable_context.element.addedBy)
+  const addedBy = evt.dragged.__draggable_context.element.addedBy
+  return canUpdate(addedBy)
+}
+
+function canUpdate(addedBy) {
+  return authStore.permissions.canEditAll ||
+    authStore.permissions.canEditOwn && Number(authStore.uid) === addedBy
+}
+
 function log(evt) {
   const key = Object.keys(evt)[0]
   switch (key) {
@@ -122,7 +134,8 @@ const dragOptions = computed(() => {
   return {
     animation: 200,
     group: 'description',
-    disabled: $q.platform.is.mobile || !store.permissions.canEditAll,
+    // Disable drag and drop in mobile
+    disabled: $q.platform.is.mobile,
     ghostClass: 'ghost',
   }
 })
