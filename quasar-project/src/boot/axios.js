@@ -2,8 +2,10 @@ import { boot } from "quasar/wrappers"
 import axios from "axios"
 import { LocalStorage } from "quasar"
 
+const apiUrl = process.env.API;
+
 let config = {
-  baseURL: "http://api.where.docker.localhost:8000/",
+  baseURL: apiUrl,
 }
 const api = axios.create(config)
 

@@ -56,6 +56,15 @@ module.exports = configure(function (ctx) {
       },
 
       vueRouterMode: "hash", // available values: 'hash', 'history'
+
+      // Set ENV variables
+      env: {
+        API: ctx.dev
+          // ? 'http://api.where.docker.localhost:8000/'
+          ? 'https://scaling-spork-699r6vrgpggfrpvp-8001.app.github.dev'
+          : 'https://localhost'
+      },
+
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
@@ -85,7 +94,7 @@ module.exports = configure(function (ctx) {
       open: false, // opens browser window automatically
       port: ctx.mode.spa
         ? 3000
-        : (ctx.mode.pwa ? 9000 : 9090)
+        : (ctx.mode.pwa ? 9000 : 9090),
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
