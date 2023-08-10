@@ -1,18 +1,30 @@
 <template>
   <q-page padding>
-    <div class="text-h5 q-pb-md">Login</div>
+    
     <form @submit.prevent.stop="onSubmit">
-      <div class="q-gutter-md col-md-6">
-        <q-input rounded dense outlined v-model="formDetails.email" label="Username" lazy-rules :rules="nameRules" ref="nameRef" />
-        <q-input rounded dense outlined v-model="formDetails.password" label="Password" :type="isPwd ? 'password' : 'text'" :rules="nameRules" ref="emailRef">
-          <template v-slot:append>
-            <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
-          </template>
-        </q-input>
-        <div class="text-right q-gutter-sm">
-          <q-btn rounded type="submit" color="primary" label="Login" />
-        </div>
+      <div class="row flex items-center justify-center h-screen">
+      
+        <q-card flat bordered class="col-md-4 col-12">
+          <q-card-section>
+            <div class="text-h5">Login</div>
+          </q-card-section>
+
+          <q-card-section>
+            <q-input rounded dense outlined v-model="formDetails.email" label="Username" lazy-rules :rules="nameRules" ref="nameRef" />
+            <q-input rounded dense outlined v-model="formDetails.password" label="Password" :type="isPwd ? 'password' : 'text'" :rules="nameRules" ref="emailRef">
+              <template v-slot:append>
+                <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
+              </template>
+            </q-input>
+          </q-card-section> 
+
+          <q-card-actions vertical>
+            <q-btn unelevated type="submit" color="primary">Login</q-btn>
+          </q-card-actions>
+        </q-card>
+        
       </div>
+
     </form>
   </q-page>
 </template>
