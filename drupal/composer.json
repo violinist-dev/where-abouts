@@ -125,6 +125,29 @@
             "drupal/core": "-p2"
         },
         "patches": {
+        },
+        "violinist": {
+            "allow_list": [],
+            "allow_update_indirect_with_direct": 0,
+            "allow_updates_beyond_constraint": 1,
+            "always_update_all": 0,
+            "assignees": [],
+            "automerge": 0,
+            "automerge_security": 0,
+            "blocklist": [],
+            "branch_prefix": "",
+            "bundled_packages": {},
+            "check_only_direct_dependencies": 1,
+            "commit_message_convention": "",
+            "default_branch": "",
+            "number_of_concurrent_updates": 0,
+            "one_pull_request_per_package": 0,
+            "run_scripts": 1,
+            "security_updates_only": 1,
+            "timeframe_disallowed": "",
+            "timezone": "+0000",
+            "update_dev_dependencies": 1,
+            "update_with_dependencies": 1
         }
     }
 }
